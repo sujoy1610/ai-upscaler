@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Upload, Download, Image, Zap, CheckCircle } from "lucide-react";
-
+import { upscaleImage } from "../api/upscale";
 export default function Home() {
   const [file, setFile] = useState(null);
   const [originalUrl, setOriginalUrl] = useState(null);
@@ -48,29 +48,28 @@ export default function Home() {
     }
   }
 
-  async function handleUpscale(factor) {
-    if (!file) return setError("Please choose an image first.");
-    setError(null);
-    setProcessing(true);
-    setResultUrl(null);
-    setResultDims(null);
+ async function handleUpscale(factor) {
+  if (!file) return setError("Please choose an image first.");
+  setError(null);
+  setProcessing(true);
+  setResultUrl(null);
+  setResultDims(null);
 
-    try {
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      const { blobUrl, width, height } = { 
-        blobUrl: originalUrl, 
-        width: originalDims.w * factor, 
-        height: originalDims.h * factor 
-      };
-      setResultUrl(blobUrl);
-      setResultDims({ w: width, h: height });
-    } catch (err) {
-      console.error(err);
-      setError(err?.message || "Upscale failed. Try again.");
-    } finally {
-      setProcessing(false);
-    }
+  try {
+    // Call your REAL API with the file
+    const { blobUrl, width, height } = await upscaleImage(file, (progress) => {
+      console.log('Upscale progress:', progress);
+    });
+    
+    setResultUrl(blobUrl);
+    setResultDims({ w: width, h: height });
+  } catch (err) {
+    console.error(err);
+    setError(err?.message || "Upscale failed. Try again.");
+  } finally {
+    setProcessing(false);
   }
+}
 
   function handleDownload() {
     if (!resultUrl) return;
