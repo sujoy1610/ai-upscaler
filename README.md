@@ -1,16 +1,90 @@
-# React + Vite
+# 🚀 AI Image Upscaler — Super Resolution Tool
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+AI-powered image enhancement tool that increases resolution using **2× / 4× upscaling** while preserving sharpness and details.  
+Users can upload any low-resolution image and download a high-quality enhanced output.
 
-Currently, two official plugins are available:
+🔗 **Live Demo:** _<your deployed link here>_  
+📂 **GitHub Repository:** _(this repo)_
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## 📌 Features
+- ⬆️ 2× & 4× AI Upscaling
+- ⚡ Real-time task polling & status progress
+- 💾 Download enhanced image
+- 🔁 Smooth user experience during processing
+- 🎨 Modern responsive UI
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## 🧠 Approach
+The goal was to build a seamless enhancement workflow:
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+1. User uploads an image
+2. A task is created via `/visual/scale` API
+3. Task ID is received and **polled at intervals**
+4. When `state = 4`, upscaling is complete
+5. Enhanced image URL is rendered & offered for download
+
+Focus areas:
+- Robust error handling
+- Non-blocking UI during processing
+- Progress feedback to the user
+
+---
+
+## 🛠 Tech Stack & Why
+
+| Tech | Role | Reason |
+|------|------|--------|
+| React (Vite) | Frontend | Fast bundling, DX & performance |
+| Axios | API Calls | Clean request management |
+| Tailwind CSS | Styling | Fast responsive UI |
+| TechHK API | AI Upscaling | Accurate & high-quality results |
+| Netlify / Vercel | Deployment | Quick, reliable hosting |
+
+---
+
+## 🚀 Local Setup
+
+```bash
+git clone <repo-url>
+cd <project-folder>
+npm install
+
+Create a .env file in the project root:
+VITE_UPSCALE_API_KEY=your_api_key_here
+VITE_BASE_URL=https://techhk.aoscdn.com/
+
+Start the project
+npm run dev
+
+API Workflow Summary
+Upload image → Receive Task ID
+           ↓
+Poll task status every 2–3s
+           ↓
+If state = 4 → Enhancement complete
+           ↓
+Show result + allow download
+
+🔮 Future Improvements
+
+With more time, I would add:
+
+Drag-and-drop upload
+
+Batch image enhancement
+
+Multiple enhancement models (denoise, colorize, face restore)
+
+Image enhancement history & user accounts
+
+Native mobile app
+
+Developer
+
+Sujoy Sarkar
+Frontend Developer — React / JavaScript
+📩 Email: sarkarsujoy715@gmail.com
+
